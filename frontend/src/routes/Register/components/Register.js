@@ -7,7 +7,7 @@ import styles from '../assets/index.less'
 
 const FormItem = Form.Item
 
-export const Login = ({
+export const Register = ({
     form: {
         getFieldDecorator,
         validateFieldsAndScroll,
@@ -19,6 +19,15 @@ export const Login = ({
             <span>{config.config.name}</span>
         </div>
         <form>
+            <FormItem hasFeedback>
+                {getFieldDecorator('name', {
+                    rules: [
+                        {
+                            required: true,
+                        },
+                    ],
+                })(<Input size="large" onPressEnter={console.log('handleOk')} placeholder="Name" />)}
+            </FormItem>
             <FormItem hasFeedback>
                 {getFieldDecorator('email', {
                     rules: [
@@ -46,7 +55,7 @@ export const Login = ({
         </form>
     </div>
 )
-Login.propTypes = {
+Register.propTypes = {
 }
 
-export default connect(({ login }) => ({ login }))(Form.create()(Login))
+export default connect(({ login }) => ({ login }))(Form.create()(Register))

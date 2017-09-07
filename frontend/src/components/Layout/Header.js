@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 import { Menu, Icon, Popover } from 'antd'
 import classnames from 'classnames'
@@ -53,8 +54,10 @@ const Header = ({ user, logout, switchSider, switchFullScreen, expanded, siderFo
             </span>}
                     >
                         <Menu.Item key="logout">
-                            <Icon type="logout" />
-                            Sign out
+                            <Link to='/login'>
+                                <Icon type="logout" />
+                                Sign out
+                            </Link>
                         </Menu.Item>
                     </SubMenu>
                 </Menu>

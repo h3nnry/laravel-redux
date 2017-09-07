@@ -4,6 +4,7 @@ import EmptyLayout from '../layouts/EmptyLayout/EmptyLayout'
 import Home from './Home'
 import CounterRoute from './Counter'
 import LoginRoute from './Login'
+import RegisterRoute from './Register'
 
 /*  Note: Instead of using JSX, we recommend using react-router
  PlainRoute objects to build route definitions.   */
@@ -22,7 +23,8 @@ export const createRoutes = (store) => ({
     {
       component: EmptyLayout,
       childRoutes: [
-        LoginRoute(store)
+        LoginRoute(store),
+        RegisterRoute(store),
       ]
     },
   ]
