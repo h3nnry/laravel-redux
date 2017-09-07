@@ -1,7 +1,7 @@
 const config = {
     name: 'Dashboard',
-    prefix: 'antdAdmin',
-    footerText: 'Ant Design Admin  © 2017 zuiidea',
+    prefix: 'dashboard',
+    footerText: 'Ant Design Dashboard  © 2017 h3nry',
     logo: '/logo.png',
     iconFontCSS: '/iconfont.css',
     iconFontJS: '/iconfont.js',

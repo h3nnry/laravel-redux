@@ -3,15 +3,17 @@ import PropTypes from 'prop-types'
 import { Menu, Icon, Popover } from 'antd'
 import classnames from 'classnames'
 import Menus from './Menu'
+import BadgeBox from './BadgeBox'
 import './Header.less'
 
 const SubMenu = Menu.SubMenu
 
-const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys, menu }) => {
+const Header = ({ user, logout, switchSider, switchFullScreen, expanded, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys, menu }) => {
     let handleClickMenu = e => e.key === 'logout' && logout()
     const menusProps = {
         menu,
         siderFold: false,
+        expanded: false,
         darkTheme: false,
         isNavbar,
         handleClickNavMenu: switchMenuPopover,
@@ -27,16 +29,19 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
                     <Icon type="bars" />
                 </div>
             </Popover>
-                : <div
-                className="button"
-                onClick={switchSider}
-            >
-                <Icon type={classnames({ 'menu-unfold': siderFold, 'menu-fold': !siderFold })} />
-            </div>}
-            <div className="rightWarpper">
-                <div className="button">
-                    <Icon type="mail" />
+                :
+                <div className="header-control-buttons">
+                    <div className="button" onClick={switchSider}>
+                        <Icon type={classnames({ 'menu-unfold': siderFold, 'menu-fold': !siderFold })} />
+                    </div>
+                    <div className="button" onClick={switchFullScreen}>
+                        <Icon type={classnames({ 'shrink': expanded, 'arrows-alt': !expanded })} />
+                    </div>
                 </div>
+
+            }
+            <div className="rightWarpper">
+                <BadgeBox/>
                 <Menu mode="horizontal" onClick={handleClickMenu}>
                     <SubMenu
                         style={{
@@ -48,6 +53,7 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
             </span>}
                     >
                         <Menu.Item key="logout">
+                            <Icon type="logout" />
                             Sign out
                         </Menu.Item>
                     </SubMenu>
@@ -62,6 +68,7 @@ Header.propTypes = {
     user: PropTypes.object,
     logout: PropTypes.func,
     switchSider: PropTypes.func,
+    switchFullScreen: PropTypes.func,
     siderFold: PropTypes.bool,
     isNavbar: PropTypes.bool,
     menuPopoverVisible: PropTypes.bool,

@@ -9,7 +9,8 @@ import { connect } from 'react-redux'
 import 'themes/index.less'
 import './PageLayout.less'
 import 'components/Layout/Layout.less'
-import { handleNavOpenKeys, switchSider, switchTheme } from 'store/globals'
+import { handleNavOpenKeys, switchSider, switchTheme, switchFullScreen } from 'store/globals'
+import { fullscreen, fullscreenChangeAddListener, fullscreenChangeRemoveListener } from 'utils/fullscreen'
 
 import { Alert, Steps } from 'antd';
 
@@ -22,11 +23,36 @@ const mapStateToProps = (state) => {
 class PageLayout extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            fullscreen: false
+        }
+
+        this.handleFullScreenState = this.handleFullScreenState.bind(this);
+        this.handleFullScreen =this.handleFullScreen.bind(this);
+    }
+
+    componentDidMount() {
+        fullscreenChangeAddListener(this.handleFullScreenState);
+    }
+
+    componentWillUnmount() {
+        fullscreenChangeRemoveListener(this.handleFullScreenState);
+    }
+
+    handleFullScreenState() {
+        this.setState({
+            fullscreen: !this.state.fullscreen
+        });
+    }
+
+    handleFullScreen() {
+        fullscreen(document.getElementById('root'))
     }
 
     static propTypes = {
         children : PropTypes.object.isRequired,
-        dispatch : PropTypes.func
+        dispatch : PropTypes.func.isRequired,
     }
 
     render() {
@@ -68,7 +94,6 @@ class PageLayout extends React.Component {
             changeOpenKeys (openKeys) {
                 window.localStorage.setItem(`${prefix}navOpenKeys`, JSON.stringify(openKeys))
                 dispatch( handleNavOpenKeys(openKeys))
-                console.log('test2');
             },
         }
 
@@ -88,8 +113,8 @@ class PageLayout extends React.Component {
                     {!isNavbar ? <aside className={classnames("sider", { ["light"]: !darkTheme })}>
                         <Sider {...siderProps} />
                     </aside> : ''}
-                    <div className="main">
-                        <Header {...headerProps} />
+                    <div className="main" id="mainContent">
+                        <Header {...headerProps} switchFullScreen={this.handleFullScreen} expanded={this.state.fullscreen} />
                         <Bread {...breadProps} />
                         <div className="container">
                             <div className="content-inner">
