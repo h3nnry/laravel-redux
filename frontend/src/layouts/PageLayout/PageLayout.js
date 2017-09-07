@@ -2,7 +2,7 @@ import React from 'react'
 import { IndexLink, Link } from 'react-router'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
-import {  config } from 'utils'
+import { config } from 'utils/config'
 import classnames from 'classnames'
 import { Layout } from 'components'
 import { connect } from 'react-redux'
@@ -60,7 +60,7 @@ class PageLayout extends React.Component {
         const { user, siderFold, darkTheme, isNavbar, menuPopoverVisible, navOpenKeys, menu, permissions } = this.props.globals
         const Step = Steps.Step;
         const { iconFontJS, iconFontCSS, logo, prefix } = config
-        const { Bread, Header, Sider } = Layout
+        const { Bread, Header, Sider, Footer } = Layout
 
         const headerProps = {
             menu,
@@ -133,6 +133,7 @@ class PageLayout extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        <Footer/>
                     </div>
                 </div>
             </div>
