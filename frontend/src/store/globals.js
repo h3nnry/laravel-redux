@@ -130,6 +130,13 @@ const initialState = {
             name: 'Counter',
             router: '/counter',
         },
+        {
+            id: 7,
+            bpid: 1,
+            icon: 'login',
+            name: 'Login',
+            router: '/login',
+        },
     ],
     menuPopoverVisible: false,
     siderFold: window.localStorage.getItem(`${prefix}siderFold`) === 'true',
