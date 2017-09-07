@@ -10,6 +10,7 @@ $ php artisan serve
 ```
 
 #### Running React-Redux on the frontend
+Added [Ant-Design](https://github.com/ant-design/ant-design) to the frontend side.
 ```bash
 $ cd frontend
 $ yarn install/npm install

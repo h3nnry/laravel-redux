@@ -46,6 +46,12 @@ const config = {
     }, project.globals))
   ],
 }
+config.resolve.alias = {
+  components: inProject(project.srcDir, 'components'),
+  utils: inProject(project.srcDir, 'utils'),
+  themes: inProject(project.srcDir, 'themes'),
+  store: inProject(project.srcDir, 'store'),
+}
 
 // JavaScript
 // ------------------------------------
@@ -97,7 +103,7 @@ const extractStyles = new ExtractTextPlugin({
 })
 
 config.module.rules.push({
-  test: /\.(sass|scss)$/,
+  test: /\.(sass|scss|less)$/,
   loader: extractStyles.extract({
     fallback: 'style-loader',
     use: [
@@ -124,6 +130,15 @@ config.module.rules.push({
       },
       {
         loader: 'sass-loader',
+        options: {
+          sourceMap: project.sourcemaps,
+          includePaths: [
+            inProjectSrc('styles'),
+          ],
+        },
+      },
+      {
+        loader: 'less-loader',
         options: {
           sourceMap: project.sourcemaps,
           includePaths: [

@@ -1,21 +1,118 @@
 import React from 'react'
 import { IndexLink, Link } from 'react-router'
 import PropTypes from 'prop-types'
-import './PageLayout.scss'
+import { Helmet } from 'react-helmet'
+import {  config } from 'utils'
+import classnames from 'classnames'
+import { Layout } from 'components'
+import { connect } from 'react-redux'
+import 'themes/index.less'
+import './PageLayout.less'
+import 'components/Layout/Layout.less'
+import { handleNavOpenKeys, switchSider, switchTheme } from 'store/globals'
 
-export const PageLayout = ({ children }) => (
-  <div className='container text-center'>
-    <h1>React Redux Starter Kit</h1>
-    <IndexLink to='/' activeClassName='page-layout__nav-item--active'>Home</IndexLink>
-    {' · '}
-    <Link to='/counter' activeClassName='page-layout__nav-item--active'>Counter</Link>
-    <div className='page-layout__viewport'>
-      {children}
-    </div>
-  </div>
-)
-PageLayout.propTypes = {
-  children: PropTypes.node,
+import { Alert, Steps } from 'antd';
+
+const mapStateToProps = (state) => {
+    return {
+        globals: state.globals
+    }
 }
 
-export default PageLayout
+class PageLayout extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
+    static propTypes = {
+        children : PropTypes.object.isRequired,
+        dispatch : PropTypes.func
+    }
+
+    render() {
+        const { dispatch } = this.props
+        const { user, siderFold, darkTheme, isNavbar, menuPopoverVisible, navOpenKeys, menu, permissions } = this.props.globals
+        const Step = Steps.Step;
+        const { iconFontJS, iconFontCSS, logo, prefix } = config
+        const { Bread, Header, Sider } = Layout
+
+        const headerProps = {
+            menu,
+            user,
+            siderFold,
+            isNavbar,
+            menuPopoverVisible,
+            navOpenKeys,
+            switchMenuPopover () {
+                dispatch({ type: 'app/switchMenuPopver' })
+            },
+            logout () {
+                dispatch({ type: 'app/logout' })
+            },
+            switchSider () {
+                dispatch(switchSider())
+            },
+            changeOpenKeys (openKeys) {
+                dispatch( handleNavOpenKeys(openKeys))
+            },
+        }
+
+        const siderProps = {
+            menu,
+            siderFold,
+            darkTheme,
+            navOpenKeys,
+            changeTheme () {
+                dispatch(switchTheme())
+            },
+            changeOpenKeys (openKeys) {
+                window.localStorage.setItem(`${prefix}navOpenKeys`, JSON.stringify(openKeys))
+                dispatch( handleNavOpenKeys(openKeys))
+                console.log('test2');
+            },
+        }
+
+        const breadProps = {
+            menu,
+        }
+        return (
+            <div>
+                <Helmet>
+                    <title>DASHBOARD</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    <link rel="icon" href={logo} type="image/x-icon"/>
+                    {iconFontJS && <script src={iconFontJS}/>}
+                    {iconFontCSS && <link rel="stylesheet" href={iconFontCSS}/>}
+                </Helmet>
+                <div className={classnames("layout", { ["fold"]: isNavbar ? false : siderFold }, { ["withnavbar"]: isNavbar })}>
+                    {!isNavbar ? <aside className={classnames("sider", { ["light"]: !darkTheme })}>
+                        <Sider {...siderProps} />
+                    </aside> : ''}
+                    <div className="main">
+                        <Header {...headerProps} />
+                        <Bread {...breadProps} />
+                        <div className="container">
+                            <div className="content-inner">
+                                <div className="content">
+                                    <h1>React Redux Starter Kit</h1>
+                                    <div className='page-layout__viewport'>
+                                        <Alert message="Very long warning text warning text text text text text text text" banner
+                                               closable/>
+                                        <Steps>
+                                            <Step title="first step"/>
+                                            <Step title="second step"/>
+                                            <Step title="third step"/>
+                                        </Steps>
+                                        {this.props.children}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+export default connect(mapStateToProps)(PageLayout)
