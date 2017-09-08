@@ -41,14 +41,14 @@ class AuthController extends Controller
             'password' => 'required|min:5',
         ]);
 
-//        if ($validator->fails()) {
-//            $errors = $validator->errors();
-//            return response()->json(['error' => array(
-//                'name'     => $errors->first('name'),
-//                'email'    => $errors->first('email'),
-//                'password' => $errors->first('password'),
-//            )], 400);
-//        }
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(['error' => array(
+                'name'     => $errors->first('name'),
+                'email'    => $errors->first('email'),
+                'password' => $errors->first('password'),
+            )], 400);
+        }
 
         $user = User::create([
             'name'      => $request->name,

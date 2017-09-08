@@ -4,11 +4,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Row, Form, Input, Icon } from 'antd'
 import { config } from 'utils'
+import { userLogin } from 'store/globals'
 import styles from '../assets/index.less'
 
 const FormItem = Form.Item
 
 export const Login = ({
+    dispatch,
     form: {
         getFieldDecorator,
         validateFieldsAndScroll,
@@ -20,7 +22,7 @@ export const Login = ({
             if (errors) {
                 return
             }
-            //todo ajax request to backend
+            dispatch(userLogin(values))
         })
     }
 
@@ -32,7 +34,7 @@ export const Login = ({
             </div>
             <form>
                 <FormItem hasFeedback>
-                    {getFieldDecorator('Email', {
+                    {getFieldDecorator('email', {
                         rules: [
                             {
                                 required: true, type: 'email', max: 255
@@ -41,7 +43,7 @@ export const Login = ({
                     })(<Input size="large" onPressEnter={handleLoginSubmit} placeholder="Email"/>)}
                 </FormItem>
                 <FormItem hasFeedback>
-                    {getFieldDecorator('Password', {
+                    {getFieldDecorator('password', {
                         rules: [
                             {
                                 required: true, min: 5

@@ -32,9 +32,21 @@ export function switchTheme () {
     }
 }
 
-export function userRegister(credentials) {console.log(credentials);
+export function userRegister(credentials) {
     return (dispatch) => {
         api.post('/register', credentials)
+            .then((response) => {
+            })
+            .then(() => {
+            })
+            .catch((error) => {
+            });
+    };
+}
+
+export function userLogin(credentials) {
+    return (dispatch) => {
+        api.post('/login', credentials)
             .then((response) => {
             })
             .then(() => {
