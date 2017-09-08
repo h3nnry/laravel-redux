@@ -35,7 +35,9 @@ export function switchTheme () {
 // Reducer
 // ------------------------------------
 const initialState = {
-    user: {},
+    user: {
+        authenticated: false,
+    },
     permissions: {
         visit: [],
     },

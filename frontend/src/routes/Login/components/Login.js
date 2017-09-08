@@ -13,45 +13,57 @@ export const Login = ({
         getFieldDecorator,
         validateFieldsAndScroll,
     }
-}) => (
-    <div className="form login-form">
-        <div className="logo">
-            <img alt={'logo'} src={config.config.logo} />
-            <span>{config.config.name}</span>
+}) => {
+
+    function handleLoginSubmit() {
+        validateFieldsAndScroll((errors, values) => {
+            if (errors) {
+                return
+            }
+            //todo ajax request to backend
+        })
+    }
+
+    return (
+        <div className="form login-form">
+            <div className="logo">
+                <img alt={'logo'} src={config.config.logo}/>
+                <span>{config.config.name}</span>
+            </div>
+            <form>
+                <FormItem hasFeedback>
+                    {getFieldDecorator('Email', {
+                        rules: [
+                            {
+                                required: true, type: 'email'
+                            },
+                        ],
+                    })(<Input size="large" onPressEnter={handleLoginSubmit} placeholder="Email"/>)}
+                </FormItem>
+                <FormItem hasFeedback>
+                    {getFieldDecorator('Password', {
+                        rules: [
+                            {
+                                required: true, min: 5
+                            },
+                        ],
+                    })(<Input size="large" type="password" onPressEnter={handleLoginSubmit} placeholder="Password"/>)}
+                </FormItem>
+                <Row>
+                    <Button type="primary" size="large" onClick={handleLoginSubmit} loading={console.log('loginLoading')}>
+                        <Icon type="login"/> Sign In
+                    </Button>
+                </Row>
+            </form>
+            <div className="sign-operation">
+                <Row>
+                    <span className="member-text">Not a member?</span>
+                    <Link to="/register"> Sign Up</Link>
+                </Row>
+            </div>
         </div>
-        <form>
-            <FormItem hasFeedback>
-                {getFieldDecorator('email', {
-                    rules: [
-                        {
-                            required: true,
-                        },
-                    ],
-                })(<Input size="large" onPressEnter={console.log('handleOk')} placeholder="Email" />)}
-            </FormItem>
-            <FormItem hasFeedback>
-                {getFieldDecorator('password', {
-                    rules: [
-                        {
-                            required: true,
-                        },
-                    ],
-                })(<Input size="large" type="password" onPressEnter={console.log('handleOk')} placeholder="Password" />)}
-            </FormItem>
-            <Row>
-                <Button type="primary" size="large" onClick={console.log('handleOk')} loading={console.log('loginLoading')}>
-                    <Icon type="login"/> Sign In
-                </Button>
-            </Row>
-        </form>
-        <div className="sign-operation">
-            <Row>
-                <span className="member-text">Not a member?</span>
-                <Link to="/register"> Sign Up</Link>
-            </Row>
-        </div>
-    </div>
-)
+    )
+}
 Login.propTypes = {
 }
 
