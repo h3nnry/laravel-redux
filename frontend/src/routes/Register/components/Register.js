@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button, Row, Form, Input } from 'antd'
+import { Button, Row, Form, Input, Icon } from 'antd'
 import { config } from 'utils'
 import styles from '../assets/index.less'
 
@@ -48,11 +49,17 @@ export const Register = ({
             </FormItem>
             <Row>
                 <Button type="primary" size="large" onClick={console.log('handleOk')} loading={console.log('loginLoading')}>
-                    Sign in
+                    <Icon type="user-add"/> Sign Up
                 </Button>
             </Row>
 
         </form>
+        <div className="sign-operation">
+            <Row>
+                <span className="member-text">Already a member?</span>
+                <Link to="/login">Sign In</Link>
+            </Row>
+        </div>
     </div>
 )
 Register.propTypes = {

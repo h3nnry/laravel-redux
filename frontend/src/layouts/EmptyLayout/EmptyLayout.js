@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import {  config } from 'utils'
+import { config } from 'utils/config'
 import 'themes/index.less'
 
 const mapStateToProps = (state) => {
@@ -36,7 +36,9 @@ class EmptyLayout extends React.Component {
                     {iconFontJS && <script src={iconFontJS}/>}
                     {iconFontCSS && <link rel="stylesheet" href={iconFontCSS}/>}
                 </Helmet>
-                {this.props.children}
+                <div>
+                    {this.props.children}
+                </div>
             </div>
         )
     }

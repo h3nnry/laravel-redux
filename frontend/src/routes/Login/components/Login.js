@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button, Row, Form, Input } from 'antd'
+import { Button, Row, Form, Input, Icon } from 'antd'
 import { config } from 'utils'
 import styles from '../assets/index.less'
 
@@ -13,7 +14,7 @@ export const Login = ({
         validateFieldsAndScroll,
     }
 }) => (
-    <div className="form">
+    <div className="form login-form">
         <div className="logo">
             <img alt={'logo'} src={config.config.logo} />
             <span>{config.config.name}</span>
@@ -39,11 +40,16 @@ export const Login = ({
             </FormItem>
             <Row>
                 <Button type="primary" size="large" onClick={console.log('handleOk')} loading={console.log('loginLoading')}>
-                    Sign in
+                    <Icon type="login"/> Sign In
                 </Button>
             </Row>
-
         </form>
+        <div className="sign-operation">
+            <Row>
+                <span className="member-text">Not a member?</span>
+                <Link to="/register"> Sign Up</Link>
+            </Row>
+        </div>
     </div>
 )
 Login.propTypes = {
