@@ -35,7 +35,7 @@ export const Login = ({
                     {getFieldDecorator('Email', {
                         rules: [
                             {
-                                required: true, type: 'email'
+                                required: true, type: 'email', max: 255
                             },
                         ],
                     })(<Input size="large" onPressEnter={handleLoginSubmit} placeholder="Email"/>)}

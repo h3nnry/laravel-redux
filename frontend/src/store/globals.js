@@ -1,4 +1,5 @@
 import config from 'utils/config'
+import api from '../api/api'
 
 const { prefix } = config
 
@@ -31,6 +32,17 @@ export function switchTheme () {
     }
 }
 
+export function userRegister(credentials) {console.log(credentials);
+    return (dispatch) => {
+        api.post('/register', credentials)
+            .then((response) => {
+            })
+            .then(() => {
+            })
+            .catch((error) => {
+            });
+    };
+}
 // ------------------------------------
 // Reducer
 // ------------------------------------

@@ -5,10 +5,12 @@ import { connect } from 'react-redux'
 import { Button, Row, Form, Input, Icon } from 'antd'
 import { config } from 'utils'
 import styles from '../assets/index.less'
+import { userRegister } from 'store/globals'
 
 const FormItem = Form.Item
 
 export const Register = ({
+    dispatch,
     form: {
         getFieldDecorator,
         validateFieldsAndScroll,
@@ -20,7 +22,7 @@ export const Register = ({
             if (errors) {
                 return
             }
-            //todo ajax request to backend
+            dispatch(userRegister(values))
         })
     }
 
@@ -35,7 +37,7 @@ export const Register = ({
                     {getFieldDecorator('name', {
                         rules: [
                             {
-                                required: true, min: 2
+                                required: true, min: 2, max: 255
                             },
                         ],
                     })(<Input size="large" onPressEnter={handleRegisterSubmit} placeholder="Name"/>)}
@@ -44,7 +46,7 @@ export const Register = ({
                     {getFieldDecorator('email', {
                         rules: [
                             {
-                                required: true, type: 'email'
+                                required: true, type: 'email', max: 255
                             },
                         ],
                     })(<Input size="large" onPressEnter={handleRegisterSubmit} placeholder="Email"/>)}
