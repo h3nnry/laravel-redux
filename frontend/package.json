@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "antd": "^2.12.8",
+    "axios": "^0.16.2",
     "babel-plugin-import": "^1.4.0",
     "bootstrap": "^4.0.0-alpha",
     "classnames": "^2.2.5",
